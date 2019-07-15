@@ -4,7 +4,7 @@ defmodule Hangman.Game do
     turns_left: 7,
     game_state: :initializing,
     letters:    [],
-    used:       MapSet.new(),
+    used:       MapSet.new()
   )
   def new_game(word) do
     %Hangman.Game{
@@ -34,12 +34,11 @@ defmodule Hangman.Game do
 
 ######################################################################
 
-
-  defp accept_move(game, guess, _alread_guessed = true) do
+  defp accept_move(game, _guess, _alread_guessed = true) do
     Map.put(game, :game_state, :already_used)
   end
 
-  defp accept_move(game, guess, _alread_guessed) do
+  defp accept_move(game, guess, _alread_guessed = false) do
     Map.put(game, :used, MapSet.put(game.used, guess))
     |> score_guess(Enum.member?(game.letters, guess))
   end
@@ -71,6 +70,6 @@ defmodule Hangman.Game do
   defp maybe_won(_),    do: :good_guess
 
   defp reveal_letter(letter, _in_word = true), do: letter
-  defp reveal_letter(letter, _not_in_word), do: "_"
+  defp reveal_letter(_letter, _not_in_word), do: "_"
 
 end

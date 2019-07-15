@@ -5,7 +5,6 @@ defmodule TextClient.Prompter do
   def accept_move(game = %State{}) do
     IO.gets("Your guess: ")
     |> check_input(game)
-    game
   end
 
   defp check_input({:error, reason}, _) do
@@ -17,10 +16,10 @@ defmodule TextClient.Prompter do
     exit(:normal)
   end
   defp check_input(input, game = %State{}) do
-    input = String.trim(input)
+    trimmed_input = String.trim(input)
     cond do
-      input =~ ~r/\A[a-z]\z/ ->
-        Map.put(game, :guess, input)
+      trimmed_input =~ ~r/\A[a-z]\z/ ->
+        Map.put(game, :guess, trimmed_input)
       true ->
         IO.puts "Please enter a single lowercase letter"
         accept_move(game)
