@@ -1,6 +1,7 @@
 defmodule Dictionary.WordList do
 
   @me __MODULE__
+  
   def start_link() do
     Agent.start_link(&start/0, name: @me)
   end
@@ -13,6 +14,7 @@ defmodule Dictionary.WordList do
   end
 
   def random_word() do
+    # Agent.get(@me, fn _ -> exit(:boom) end)
     Agent.get(@me, &Enum.random/1)
   end
 

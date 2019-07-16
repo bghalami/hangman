@@ -20,20 +20,20 @@ defmodule GameTest do
   test "state isn't changed for :won or :lost game" do
     for state <- [ :won, :lost ] do
       game =  Game.new_game() |> Map.put(:game_state, state)
-      assert ^game = Game.make_move(game, "x")
+      assert { ^game, _tally } = Game.make_move(game, "x")
     end
   end
 
   test "first occurence of letter is not already used" do
     game = Game.new_game()
-    game = Game.make_move(game, "x")
+    { game, _tally } = Game.make_move(game, "x")
     assert game.game_state != :already_used
   end
 
   test "second occurence of letter is already used" do
     game = Game.new_game()
-    game = Game.make_move(game, "x")
-    game = Game.make_move(game, "x")
+    { game, _tally } = Game.make_move(game, "x")
+    { game, _tally } = Game.make_move(game, "x")
     assert game.game_state == :already_used
   end
 
@@ -50,7 +50,7 @@ defmodule GameTest do
 
     moves
     |> Enum.reduce(game, fn ({guess, state}, new_game) ->
-      new_game = Game.make_move(new_game, guess)
+      { new_game, _tally } = Game.make_move(new_game, guess)
       assert new_game.game_state == state
       new_game
       end )
@@ -71,7 +71,7 @@ defmodule GameTest do
 
     moves
     |> Enum.reduce(game, fn ({guess, state}, new_game) ->
-      new_game = Game.make_move(new_game, guess)
+      { new_game, _tally } = Game.make_move(new_game, guess)
       assert new_game.game_state == state
       new_game
       end )
