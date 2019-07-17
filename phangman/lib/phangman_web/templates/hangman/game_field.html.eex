@@ -1,1 +1,14 @@
-<h1>Here you'll play dis game!</h1>
+<h1>LLLLLLETS GET READY TO RUMMMMBLLLLEEEEE</h1>
+<% import PhangmanWeb.HangmanController %>
+
+<p>
+  Turns Left: <%= @tally.turns_left %>
+</p>
+</br>
+<p>
+  Word So Far: <%= @tally.letters |> Enum.join(" ") %>
+</p>
+</br>
+<p>
+  Guessed Letters: <%= word_so_far(@tally) %>
+</p>
