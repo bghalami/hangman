@@ -6,7 +6,7 @@ defmodule TextClient.Player do
   def play(%State{tally: %{ game_state: :won}}) do
     exit_with_message("You won!")
   end
-  def play(game = %State{tally: %{ game_state: :lost}, game_service: gs}) do
+  def play(%State{tally: %{ game_state: :lost}, game_service: gs}) do
     exit_with_message("Sorry, you lost. The word was \"#{Enum.join(gs.letters, "")}\"")
   end
 

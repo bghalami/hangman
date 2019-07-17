@@ -13,13 +13,14 @@ defmodule TextClient.MixProject do
 
   def application do
     [
-      extra_applications: [:logger]
+      included_applications: [ :hangman ],
+      extra_applications:   [:logger]
     ]
   end
 
   defp deps do
     [
-      { :hangman, path: "../hangman" },
+      { :hangman, path: "../hangman" }
     ]
   end
 end
