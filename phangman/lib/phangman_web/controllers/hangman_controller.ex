@@ -11,10 +11,17 @@ defmodule PhangmanWeb.HangmanController do
 
     conn
     |> put_session( :game, game )
-    |> render( "game_field.html", tally: tally )
+    |> render( "game_field.html", tally: tally, conn: conn )
   end
 
-  def word_so_far(tally) do
-    tally.guessed |> Enum.join(", ")
+  def make_move(conn, params) do
+    guess = params["make_move"]["guess"]
+    tally =
+      conn
+      |> get_session(:game)
+      |> Hangman.make_move(guess)
+    put_in(conn.params["make_move"]["guess"], "")
+    |> render("game_field.html", tally: tally, conn: conn )
   end
+
 end

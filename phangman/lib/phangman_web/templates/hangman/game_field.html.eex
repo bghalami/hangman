@@ -1,5 +1,6 @@
-<h1>LLLLLLETS GET READY TO RUMMMMBLLLLEEEEE</h1>
-<% import PhangmanWeb.HangmanController %>
+<h1>Hangman: The Gauntlet</h1>
+
+<%= game_state(@tally.game_state) %>
 
 <p>
   Turns Left: <%= @tally.turns_left %>
@@ -12,3 +13,12 @@
 <p>
   Guessed Letters: <%= word_so_far(@tally) %>
 </p>
+<br>
+<%= if game_over?(@tally) do %>
+  <%= new_game_button(@conn) %>
+<% else %>
+  <%= form_for(@conn, Routes.hangman_path(@conn, :make_move), [ as: :make_move, method: :put] , fn f -> %>
+    <%= text_input(f, :guess) %>
+    <%= submit("Make Guess") %>
+  <% end) %>
+<% end %>
