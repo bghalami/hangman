@@ -1,24 +1,11 @@
-<h1>Hangman: The Gauntlet</h1>
-
 <%= game_state(@tally.game_state) %>
-
-<p>
-  Turns Left: <%= @tally.turns_left %>
-</p>
-</br>
-<p>
-  Word So Far: <%= @tally.letters |> Enum.join(" ") %>
-</p>
-</br>
-<p>
-  Guessed Letters: <%= word_so_far(@tally) %>
-</p>
-<br>
-<%= if game_over?(@tally) do %>
-  <%= new_game_button(@conn) %>
-<% else %>
-  <%= form_for(@conn, Routes.hangman_path(@conn, :make_move), [ as: :make_move, method: :put] , fn f -> %>
-    <%= text_input(f, :guess) %>
-    <%= submit("Make Guess") %>
-  <% end) %>
-<% end %>
+<div class="container">
+  <div class="row" >
+    <div class="col col-md-4">
+      <%= render "_gallows.html", left: @tally.turns_left %>
+    </div>
+    <div class="col col-md-7 offset-md-1">
+      <%= render "_status.html", tally: @tally, conn: @conn %>
+    </div>
+  </div>
+</div>
